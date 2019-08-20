@@ -9,20 +9,17 @@ import com.codingbingo.rocketmq.RocketMQProperties;
 import com.codingbingo.rocketmq.constants.RocketMQContent;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 /**
  * Author bingo
  * Date 2018/9/28 17:31
  */
-@Component
-@ConditionalOnProperty(name = "spring.rocketmq.defaultProducerEnable", havingValue = "true")
 public class DefaultRocketMQProducer {
 
-    @Resource
+    @Autowired
     private RocketMQProperties rocketMqProperties;
 
     private Producer producer;

@@ -1,13 +1,17 @@
 package com.codingbingo.rocketmq;
 
 import com.codingbingo.rocketmq.component.AbstractRocketMQConsumer;
+import com.codingbingo.rocketmq.component.DefaultRocketMQProducer;
 import com.codingbingo.rocketmq.component.RocketMQConsumerManager;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,12 +23,26 @@ import org.springframework.context.event.EventListener;
  * Date 2018/8/27 00:21
  */
 @Configuration
-@EnableConfigurationProperties(RocketMQProperties.class)
 @ComponentScan("com.codingbingo.rocketmq")
 public class RocketMQAutoConfiguration {
-    private final static Logger logger = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
+    static final String ROCKETMQ_PREFIX = "spring.rocketmq";
+    final static Logger logger = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
     private RocketMQConsumerManager rocketMQConsumerManager;
+
+    @Bean("defaultRocketMQProperties")
+    @ConfigurationProperties(prefix = ROCKETMQ_PREFIX)
+    @ConditionalOnProperty(prefix = ROCKETMQ_PREFIX, name = {"producerId", "accessKey", "secretKey", "ONSAddr", "topic"})
+    public RocketMQProperties defaultRocketMQProperties() {
+        return new RocketMQProperties();
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "spring.rocketmq.defaultProducerEnable", havingValue = "true")
+    @ConditionalOnBean(name = {"defaultRocketMQProperties"})
+    public DefaultRocketMQProducer defaultRocketMQProducer(@Qualifier("defaultRocketMQProperties") RocketMQProperties defaultRocketMQProperties){
+        return new DefaultRocketMQProducer();
+    }
 
     @Bean
     @ConditionalOnMissingBean
