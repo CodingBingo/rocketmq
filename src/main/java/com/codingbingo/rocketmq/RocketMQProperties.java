@@ -1,15 +1,10 @@
 package com.codingbingo.rocketmq;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 /**
  * Author bingo
  * Date 2018/8/26 23:21
  */
-@ConfigurationProperties(prefix = RocketMQProperties.ROCKETMQ_PREFIX)
 public class RocketMQProperties {
-    static final String ROCKETMQ_PREFIX = "spring.rocketmq";
-
     private String producerId;
 
     private String accessKey;

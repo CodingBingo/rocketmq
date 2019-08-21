@@ -1,0 +1,6 @@
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/constants/RocketMQContent.java
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/component/RocketMQConsumerManager.java
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/RocketMQProperties.java
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/component/DefaultRocketMQProducer.java
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/component/AbstractRocketMQConsumer.java
+/Users/bingo/Git/rocketmq/src/main/java/com/codingbingo/rocketmq/RocketMQAutoConfiguration.java

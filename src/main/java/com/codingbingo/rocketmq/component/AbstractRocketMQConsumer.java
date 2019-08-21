@@ -1,25 +1,19 @@
 package com.codingbingo.rocketmq.component;
 
 import com.alibaba.fastjson.JSON;
-import com.aliyun.openservices.ons.api.Action;
-import com.aliyun.openservices.ons.api.ConsumeContext;
-import com.aliyun.openservices.ons.api.Consumer;
-import com.aliyun.openservices.ons.api.Message;
-import com.aliyun.openservices.ons.api.MessageListener;
-import com.aliyun.openservices.ons.api.ONSFactory;
-import com.aliyun.openservices.ons.api.PropertyKeyConst;
-import com.aliyun.openservices.ons.api.PropertyValueConst;
+import com.aliyun.openservices.ons.api.*;
 import com.codingbingo.rocketmq.RocketMQProperties;
 import com.codingbingo.rocketmq.constants.RocketMQContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+
+import javax.annotation.PostConstruct;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Properties;
 import java.util.Set;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 /**
  * Author bingo
@@ -28,7 +22,6 @@ import org.springframework.util.Assert;
 public abstract class AbstractRocketMQConsumer<Content extends RocketMQContent> {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Resource
     private RocketMQProperties rocketMqProperties;
 
     private Class<Content> contentClass;
@@ -36,6 +29,10 @@ public abstract class AbstractRocketMQConsumer<Content extends RocketMQContent> 
      * consumer holder.
      */
     private Consumer defaultConsumer;
+
+    public AbstractRocketMQConsumer(RocketMQProperties rocketMqProperties) {
+        this.rocketMqProperties = rocketMqProperties;
+    }
 
     /**
      * 订阅方式
@@ -132,6 +129,6 @@ public abstract class AbstractRocketMQConsumer<Content extends RocketMQContent> 
     }
 
     protected String getConsumerIdPrefix(){
-        return "GID_";
+        return "CID_";
     }
 }
